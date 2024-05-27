@@ -1,4 +1,4 @@
-# modsculpt <img src="man/figures/logo.png" align="right" width="260px" height="300px" />
+# modsculpt
 
 <!-- start badges -->
 [![Check 🛠](https://github.com/genentech/modsculpt/actions/workflows/check.yaml/badge.svg)](https://genentech.github.io/modsculpt/unit-test-report/)
@@ -7,6 +7,7 @@
 
 ![](man/figures/ms_flow.png)
 
+<img src="man/figures/logo.png" align="right" width="260px" height="300px" />
 
 Additive modeling algorithms are an essential part of the machine learning modeler’s tool kit when working with tabular data. Such predictive models have excellent intrinsic interpretability and often have optimal or near optimal performance. In some cases, the best additive model performance is attained by models that are linear functions of the input features. Such linear additive models can be fit using classical statistical models, when there are not too many features relative to the size of the training dataset, or regularized methods such as elastic net, when there are many features. However, there are also many cases where additive functions need to flexibly allow for:
 
