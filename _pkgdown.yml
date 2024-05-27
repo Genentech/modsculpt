@@ -1,0 +1,56 @@
+url: https://genentech.github.io/modsculpt
+
+template:
+  bootstrap: 5
+  bootswatch: flatly
+  theme: breeze-light
+
+home:
+  title: "{modsculpt} Model Sculpting"
+  description: |
+    Direct and Indirect Additive Modeling with Model Sculpting
+
+navbar:
+  bg: primary
+  structure:
+    left:  [intro, binary, reference, reports]
+    right: [search, github]
+  components:
+    binary:
+      text: "Binary Example"
+      href: articles/binary.html
+    reports:
+      text: Reports
+      menu:
+        # - text: Coverage report
+        #   href: ../coverage-report/
+        - text: Unit test report
+          href: ../unit-test-report/
+    github:
+      icon: fab fa-github fa-lg
+      href: https://www.github.com/genentech/modsculpt
+
+reference:
+- title: "Sculpting"
+  contents:
+  - sample_marginals
+  - sculpt_rough
+  - sculpt_detailed_lm
+  - sculpt_detailed_gam
+  - sculpt_detailed_generic
+  - sculpt_polished
+- title: "Metrics"
+  contents:
+  - var_imp
+  - metrics
+- title: "Plots"
+  contents:
+  - starts_with("g_")
+- title: "Plot helpers"
+  desc: Specify details for plots, e.g. facetting or vizualisation of missings
+  contents:
+  - ends_with("_specification")
+- title: "Utilities"
+  desc: General utility functions
+  contents:
+  - parallel_set

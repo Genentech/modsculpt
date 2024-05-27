@@ -1,0 +1,52 @@
+Package: modsculpt
+Title: Direct and Indirect Additive Modeling with Model Sculpting
+Version: 0.1
+Authors@R: c(
+    person("Ondrej", "Slama", email = "ondrej.slama@roche.com", role = c("aut", "cre")),
+    person("Kenta", "Yoshida", email = "yoshida.kenta@gene.com", role = "aut"),
+    person("Christina", "Rabe", email = "rabec@gene.com", role = "aut"),
+    person("Michel", "Friesenhahn", email = "friesem1@gene.com", role = "aut"),
+    person("F. Hoffmann-La Roche AG", role = c("cph", "fnd"))
+  )
+Description: Additive modeling algorithms are crucial for working with tabular data in machine 
+  learning. Such models offer intrinsic interpretability and frequently have optimal or 
+  near-optimal performance. In many cases linear additive models (fit via classical statistical 
+  models or using regularized methods, depending on the number of features) have optimal 
+  performance. However, in general it may be necessary to use non-linear functions of the 
+  features and use constraints on those functions to ensure trustworthiness. The Model Sculpting 
+  method has been developed to construct such additive models; it involves creating a strong 
+  learner (often a black box model with optimal performance), extracting an additive 
+  approximation of it, pruning negligible features, and refining the model for smoothness and 
+  feature relevance. The package modsculpt provides the necessary code to implement this Model 
+  Sculpting pipeline.
+URL: https://genentech.github.io/modsculpt
+License: Apache License 2.0
+Depends:
+  R (>= 4.1.0)
+Imports: 
+  checkmate,
+  data.table,
+  doParallel,
+  ggplot2,
+  ggrepel,
+  gridExtra,
+  foreach,
+  MASS,
+  mgcv,
+  parallel,
+  stats,
+  stringr
+Suggests: 
+  cgam,
+  knitr,
+  rmarkdown,
+  rpart,
+  testthat (>= 3.0.0),
+  xgboost  
+Encoding: UTF-8
+Language: en-US
+LazyData: true
+RoxygenNote: 7.3.1
+Roxygen: list(markdown = TRUE)
+Config/testthat/edition: 3
+VignetteBuilder: knitr

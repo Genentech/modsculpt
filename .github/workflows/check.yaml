@@ -1,0 +1,36 @@
+---
+name: Check 🛠
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+    branches:
+      - main
+      - develop
+  push:
+    branches:
+      - main
+      - develop
+  workflow_dispatch:
+
+jobs:
+  audit:
+    name: Audit Dependencies 🕵️‍♂️
+    uses: insightsengineering/r.pkg.template/.github/workflows/audit.yaml@main
+  r-cmd:
+    name: R CMD Check 🧬
+    uses: insightsengineering/r.pkg.template/.github/workflows/build-check-install.yaml@main
+    secrets:
+      REPO_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    with:
+      additional-caches: |
+        ${{ github.workspace }}/.cache
+  # coverage:
+  #   name: Coverage 📔
+  #   uses: insightsengineering/r.pkg.template/.github/workflows/test-coverage.yaml@main
+  #   secrets:
+  #     REPO_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
