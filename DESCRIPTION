@@ -38,6 +38,7 @@ Imports:
   stringr
 Suggests: 
   cgam,
+  desc,
   knitr,
   rmarkdown,
   rpart,
