@@ -1,1 +1,1 @@
-requireNamespace("desc") # for github workflows
+requireNamespace("cgam") # for github workflows
