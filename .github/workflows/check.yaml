@@ -15,6 +15,7 @@ on:
     branches:
       - main
       - develop
+      - debug-renv
   workflow_dispatch:
 
 jobs:
