@@ -137,7 +137,7 @@ Firstly, we need to define a prediction function that takes data as input
 and returns predictions based on the trained model (in this case, the xgboost above).
 
 For a binary response, it is worth to sculpt the model on the log-odds scale 
-instead of the probability scale.
+instead of the probability scale since the xgboost is built in the log-odds scale as well (see parameter `objective = "binary:logistic"`).
 
 ```{r}
 xgb_pred <- function(x) {
@@ -261,8 +261,8 @@ knitr::kable(metrics_test, align = "lc")
 
 
 Since the "Strong learner" is the only model with interactions, 
-the table above suggests that the interactions are not significant, 
-since the performance of the "Rough model" is almost the same.
+the table above suggests that the interactions are not significant as 
+the performance of the "Rough model" is almost the same.
 
 What is more, using the "Polished model" with only 4 selected features further reduces 
 the model complexity without any significant performance loss.
