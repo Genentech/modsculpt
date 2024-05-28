@@ -178,7 +178,9 @@ predefined parameters):</p>
 input and returns predictions based on the trained model (in this case,
 the xgboost above).</p>
 <p>For a binary response, it is worth to sculpt the model on the
-log-odds scale instead of the probability scale.</p>
+log-odds scale instead of the probability scale since the xgboost is
+built in the log-odds scale as well (see parameter
+<code>objective = "binary:logistic"</code>).</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">xgb_pred</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">probs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">est</span>, newdata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html" class="external-link">model.matrix</a></span><span class="op">(</span><span class="op">~</span> <span class="va">.</span> <span class="op">-</span> <span class="fl">1</span>, data <span class="op">=</span> <span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
@@ -288,8 +290,8 @@ this to probabilities, we need to transform them:</p>
 </tbody>
 </table>
 <p>Since the “Strong learner” is the only model with interactions, the
-table above suggests that the interactions are not significant, since
-the performance of the “Rough model” is almost the same.</p>
+table above suggests that the interactions are not significant as the
+performance of the “Rough model” is almost the same.</p>
 <p>What is more, using the “Polished model” with only 4 selected
 features further reduces the model complexity without any significant
 performance loss.</p>
