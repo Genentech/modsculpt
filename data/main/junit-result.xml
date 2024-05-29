@@ -1,155 +1,155 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="metrics" timestamp="2024-05-28T06:55:07Z" hostname="5ee0dcbf9091" tests="19" skipped="0" failures="0" errors="0" time="0.756">
-    <testcase time="0.018" classname="metrics" name="metrics_r2_works"/>
+  <testsuite name="metrics" timestamp="2024-05-29T18:36:09Z" hostname="b488560ff2b7" tests="19" skipped="0" failures="0" errors="0" time="0.807">
+    <testcase time="0.02" classname="metrics" name="metrics_r2_works"/>
     <testcase time="0.017" classname="metrics" name="metrics_r2_works"/>
-    <testcase time="0.00800000000000001" classname="metrics" name="metrics_r2_works"/>
-    <testcase time="0.0179999999999999" classname="metrics" name="metrics_R2_works"/>
+    <testcase time="0.00900000000000001" classname="metrics" name="metrics_r2_works"/>
+    <testcase time="0.02" classname="metrics" name="metrics_R2_works"/>
     <testcase time="0.003" classname="metrics" name="metrics_R2_works"/>
-    <testcase time="0.002" classname="metrics" name="metrics_R2_works"/>
+    <testcase time="0.003" classname="metrics" name="metrics_R2_works"/>
     <testcase time="0.00600000000000001" classname="metrics" name="metrics_DI_works"/>
     <testcase time="0.003" classname="metrics" name="metrics_DI_works"/>
-    <testcase time="0.002" classname="metrics" name="metrics_DI_works"/>
-    <testcase time="0.00700000000000001" classname="metrics" name="metrics_MI_works"/>
+    <testcase time="0.003" classname="metrics" name="metrics_DI_works"/>
+    <testcase time="0.00600000000000001" classname="metrics" name="metrics_MI_works"/>
+    <testcase time="0.003" classname="metrics" name="metrics_MI_works"/>
+    <testcase time="0.003" classname="metrics" name="metrics_MI_works"/>
     <testcase time="0.002" classname="metrics" name="metrics_MI_works"/>
-    <testcase time="0.003" classname="metrics" name="metrics_MI_works"/>
-    <testcase time="0.003" classname="metrics" name="metrics_MI_works"/>
-    <testcase time="0.62" classname="metrics" name="metrics_fit_calib_works"/>
+    <testcase time="0.66" classname="metrics" name="metrics_fit_calib_works"/>
     <testcase time="0.004" classname="metrics" name="metrics_fit_calib_works"/>
-    <testcase time="0.022" classname="metrics" name="metrics_fit_calib_works"/>
-    <testcase time="0.00299999999999989" classname="metrics" name="metrics_fit_calib_works"/>
+    <testcase time="0.0250000000000001" classname="metrics" name="metrics_fit_calib_works"/>
+    <testcase time="0.004" classname="metrics" name="metrics_fit_calib_works"/>
     <testcase time="0.012" classname="metrics" name="metrics_fit_calib_works"/>
-    <testcase time="0.00300000000000011" classname="metrics" name="metrics_fit_calib_works"/>
+    <testcase time="0.004" classname="metrics" name="metrics_fit_calib_works"/>
   </testsuite>
-  <testsuite name="plots_density" timestamp="2024-05-28T06:55:08Z" hostname="5ee0dcbf9091" tests="1" skipped="1" failures="0" errors="0" time="0.236">
-    <testcase time="0.236" classname="plots_density" name="check_density_and_quantile_calculations">
+  <testsuite name="plots_density" timestamp="2024-05-29T18:36:10Z" hostname="b488560ff2b7" tests="1" skipped="1" failures="0" errors="0" time="0.247">
+    <testcase time="0.247" classname="plots_density" name="check_density_and_quantile_calculations">
       <skipped message="Reason: On CRAN ('test-plots_density.R:37:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="sculpting" timestamp="2024-05-28T06:55:08Z" hostname="5ee0dcbf9091" tests="110" skipped="8" failures="0" errors="0" time="1.708">
-    <testcase time="0.0939999999999999" classname="sculpting" name="sample_marginals_works_as_expected"/>
+  <testsuite name="sculpting" timestamp="2024-05-29T18:36:10Z" hostname="b488560ff2b7" tests="110" skipped="8" failures="0" errors="0" time="1.811">
+    <testcase time="0.0980000000000001" classname="sculpting" name="sample_marginals_works_as_expected"/>
+    <testcase time="0.00299999999999989" classname="sculpting" name="sample_marginals_works_as_expected"/>
     <testcase time="0.00300000000000011" classname="sculpting" name="sample_marginals_works_as_expected"/>
-    <testcase time="0.00299999999999989" classname="sculpting" name="sample_marginals_works_as_expected"/>
-    <testcase time="0.0390000000000001" classname="sculpting" name="sample_marginals_works_as_expected"/>
-    <testcase time="0.004" classname="sculpting" name="sample_marginals_works_as_expected"/>
-    <testcase time="0.135" classname="sculpting" name="sample_marginals_works_as_expected"/>
-    <testcase time="0.00299999999999989" classname="sculpting" name="sample_marginals_works_as_expected"/>
-    <testcase time="0.0249999999999999" classname="sculpting" name="calculate_ice_data_and_generate_ice_data_works_as_expected">
+    <testcase time="0.0409999999999999" classname="sculpting" name="sample_marginals_works_as_expected"/>
+    <testcase time="0.00500000000000012" classname="sculpting" name="sample_marginals_works_as_expected"/>
+    <testcase time="0.142" classname="sculpting" name="sample_marginals_works_as_expected"/>
+    <testcase time="0.00300000000000011" classname="sculpting" name="sample_marginals_works_as_expected"/>
+    <testcase time="0.0260000000000002" classname="sculpting" name="calculate_ice_data_and_generate_ice_data_works_as_expected">
       <skipped message="Reason: On CRAN ('test-sculpting.R:63:3')"/>
     </testcase>
-    <testcase time="0.034" classname="sculpting" name="calculate_pdp_data_and_generate_pdp_data_works_as_expected">
+    <testcase time="0.036" classname="sculpting" name="calculate_pdp_data_and_generate_pdp_data_works_as_expected">
       <skipped message="Reason: On CRAN ('test-sculpting.R:113:3')"/>
     </testcase>
-    <testcase time="0.0300000000000002" classname="sculpting" name="generate_ice_data_and_generate_pdp_data_with_logodds_to_prob_works_as_expected"/>
-    <testcase time="0.0109999999999997" classname="sculpting" name="generate_ice_data_and_generate_pdp_data_with_logodds_to_prob_works_as_expected"/>
-    <testcase time="0.123" classname="sculpting" name="sculpt_rough_works_as_expected"/>
-    <testcase time="0.00099999999999989" classname="sculpting" name="sculpt_rough_works_as_expected"/>
+    <testcase time="0.0329999999999999" classname="sculpting" name="generate_ice_data_and_generate_pdp_data_with_logodds_to_prob_works_as_expected"/>
+    <testcase time="0.0110000000000001" classname="sculpting" name="generate_ice_data_and_generate_pdp_data_with_logodds_to_prob_works_as_expected"/>
+    <testcase time="0.129" classname="sculpting" name="sculpt_rough_works_as_expected"/>
+    <testcase time="0.00199999999999978" classname="sculpting" name="sculpt_rough_works_as_expected"/>
     <testcase time="0.004" classname="sculpting" name="sculpt_rough_works_as_expected"/>
     <testcase time="0.004" classname="sculpting" name="sculpt_rough_works_as_expected"/>
-    <testcase time="0.0100000000000002" classname="sculpting" name="sculpt_rough_works_as_expected">
+    <testcase time="0.0110000000000001" classname="sculpting" name="sculpt_rough_works_as_expected">
       <skipped message="Reason: On CRAN ('test-sculpting.R:204:3')"/>
     </testcase>
-    <testcase time="0.0569999999999999" classname="sculpting" name="sculpt_rough_works_with_1_2_3_variable_s_"/>
+    <testcase time="0.0600000000000001" classname="sculpting" name="sculpt_rough_works_with_1_2_3_variable_s_"/>
     <testcase time="0.00099999999999989" classname="sculpting" name="sculpt_rough_works_with_1_2_3_variable_s_"/>
+    <testcase time="0.004" classname="sculpting" name="sculpt_rough_works_with_1_2_3_variable_s_"/>
     <testcase time="0.00300000000000011" classname="sculpting" name="sculpt_rough_works_with_1_2_3_variable_s_"/>
     <testcase time="0.00299999999999967" classname="sculpting" name="sculpt_rough_works_with_1_2_3_variable_s_"/>
-    <testcase time="0.00300000000000011" classname="sculpting" name="sculpt_rough_works_with_1_2_3_variable_s_"/>
-    <testcase time="0.00600000000000023" classname="sculpting" name="sculpt_rough_works_with_1_2_3_variable_s_">
+    <testcase time="0.00700000000000012" classname="sculpting" name="sculpt_rough_works_with_1_2_3_variable_s_">
       <skipped message="Reason: On CRAN ('test-sculpting.R:246:3')"/>
     </testcase>
-    <testcase time="0.161" classname="sculpting" name="sculpt_detailed_lm_works_as_expected"/>
-    <testcase time="0.00099999999999989" classname="sculpting" name="sculpt_detailed_lm_works_as_expected"/>
-    <testcase time="0.00300000000000011" classname="sculpting" name="sculpt_detailed_lm_works_as_expected"/>
-    <testcase time="0.00300000000000011" classname="sculpting" name="sculpt_detailed_lm_works_as_expected"/>
-    <testcase time="0.0129999999999999" classname="sculpting" name="sculpt_detailed_lm_works_as_expected">
+    <testcase time="0.17" classname="sculpting" name="sculpt_detailed_lm_works_as_expected"/>
+    <testcase time="0.00200000000000022" classname="sculpting" name="sculpt_detailed_lm_works_as_expected"/>
+    <testcase time="0.00299999999999967" classname="sculpting" name="sculpt_detailed_lm_works_as_expected"/>
+    <testcase time="0.00299999999999967" classname="sculpting" name="sculpt_detailed_lm_works_as_expected"/>
+    <testcase time="0.0130000000000003" classname="sculpting" name="sculpt_detailed_lm_works_as_expected">
       <skipped message="Reason: On CRAN ('test-sculpting.R:308:3')"/>
     </testcase>
-    <testcase time="0.278" classname="sculpting" name="sculpt_detailed_gam_works_as_expected"/>
-    <testcase time="0.00199999999999978" classname="sculpting" name="sculpt_detailed_gam_works_as_expected"/>
+    <testcase time="0.293" classname="sculpting" name="sculpt_detailed_gam_works_as_expected"/>
+    <testcase time="0.00200000000000022" classname="sculpting" name="sculpt_detailed_gam_works_as_expected"/>
+    <testcase time="0.00599999999999978" classname="sculpting" name="sculpt_detailed_gam_works_as_expected"/>
     <testcase time="0.004" classname="sculpting" name="sculpt_detailed_gam_works_as_expected"/>
-    <testcase time="0.00499999999999989" classname="sculpting" name="sculpt_detailed_gam_works_as_expected"/>
     <testcase time="0.0140000000000002" classname="sculpting" name="sculpt_detailed_gam_works_as_expected">
       <skipped message="Reason: On CRAN ('test-sculpting.R:347:3')"/>
     </testcase>
-    <testcase time="0.0790000000000002" classname="sculpting" name="sculptures_work_with_one_variable"/>
-    <testcase time="0.004" classname="sculpting" name="sculptures_work_with_one_variable"/>
-    <testcase time="0.093" classname="sculpting" name="sculptures_work_with_missings_flag_all_same">
+    <testcase time="0.0829999999999997" classname="sculpting" name="sculptures_work_with_one_variable"/>
+    <testcase time="0.00500000000000034" classname="sculpting" name="sculptures_work_with_one_variable"/>
+    <testcase time="0.0989999999999998" classname="sculpting" name="sculptures_work_with_missings_flag_all_same">
       <skipped message="Reason: On CRAN ('test-sculpting.R:394:3')"/>
     </testcase>
-    <testcase time="0.0749999999999997" classname="sculpting" name="sculptures_work_with_missings_flag_different_per_column">
+    <testcase time="0.081" classname="sculpting" name="sculptures_work_with_missings_flag_different_per_column">
       <skipped message="Reason: On CRAN ('test-sculpting.R:423:3')"/>
     </testcase>
-    <testcase time="0.0649999999999999" classname="sculpting" name="Rough_class_is_defined_properly"/>
-    <testcase time="0.00200000000000022" classname="sculpting" name="Rough_class_is_defined_properly"/>
-    <testcase time="0.00199999999999978" classname="sculpting" name="Rough_class_is_defined_properly"/>
+    <testcase time="0.0710000000000002" classname="sculpting" name="Rough_class_is_defined_properly"/>
+    <testcase time="0.00099999999999989" classname="sculpting" name="Rough_class_is_defined_properly"/>
     <testcase time="0.00300000000000011" classname="sculpting" name="Rough_class_is_defined_properly"/>
-    <testcase time="0.00300000000000011" classname="sculpting" name="Rough_class_is_defined_properly"/>
-    <testcase time="0.00199999999999978" classname="sculpting" name="Rough_class_is_defined_properly"/>
-    <testcase time="0.00199999999999978" classname="sculpting" name="Rough_class_is_defined_properly"/>
-    <testcase time="0.00300000000000011" classname="sculpting" name="Rough_class_is_defined_properly"/>
-    <testcase time="0.00199999999999978" classname="sculpting" name="Rough_class_is_defined_properly"/>
-    <testcase time="0.00300000000000011" classname="sculpting" name="Rough_class_is_defined_properly"/>
-    <testcase time="0.00300000000000011" classname="sculpting" name="Rough_class_is_defined_properly"/>
-    <testcase time="0.00300000000000011" classname="sculpting" name="Rough_class_is_defined_properly"/>
-    <testcase time="0.00199999999999978" classname="sculpting" name="Rough_class_is_defined_properly"/>
     <testcase time="0.00300000000000011" classname="sculpting" name="Rough_class_is_defined_properly"/>
     <testcase time="0.00299999999999967" classname="sculpting" name="Rough_class_is_defined_properly"/>
     <testcase time="0.00300000000000011" classname="sculpting" name="Rough_class_is_defined_properly"/>
-    <testcase time="0.0100000000000002" classname="sculpting" name="Rough_class_is_defined_properly"/>
-    <testcase time="0.00299999999999967" classname="sculpting" name="Rough_class_is_defined_properly"/>
     <testcase time="0.00300000000000011" classname="sculpting" name="Rough_class_is_defined_properly"/>
-    <testcase time="0.00200000000000022" classname="sculpting" name="Rough_class_is_defined_properly"/>
-    <testcase time="0.00299999999999967" classname="sculpting" name="Rough_class_is_defined_properly"/>
-    <testcase time="0.00300000000000011" classname="sculpting" name="Rough_class_is_defined_properly"/>
-    <testcase time="0.00300000000000011" classname="sculpting" name="Rough_class_is_defined_properly"/>
-    <testcase time="0.00300000000000011" classname="sculpting" name="Rough_class_is_defined_properly"/>
-    <testcase time="0.00199999999999978" classname="sculpting" name="Rough_class_is_defined_properly"/>
     <testcase time="0.00300000000000011" classname="sculpting" name="Rough_class_is_defined_properly"/>
     <testcase time="0.00199999999999978" classname="sculpting" name="Rough_class_is_defined_properly"/>
     <testcase time="0.004" classname="sculpting" name="Rough_class_is_defined_properly"/>
-    <testcase time="0.00300000000000011" classname="sculpting" name="Rough_class_is_defined_properly"/>
     <testcase time="0.00200000000000022" classname="sculpting" name="Rough_class_is_defined_properly"/>
-    <testcase time="0.00299999999999967" classname="sculpting" name="Rough_class_is_defined_properly"/>
+    <testcase time="0.004" classname="sculpting" name="Rough_class_is_defined_properly"/>
+    <testcase time="0.00199999999999978" classname="sculpting" name="Rough_class_is_defined_properly"/>
     <testcase time="0.00300000000000011" classname="sculpting" name="Rough_class_is_defined_properly"/>
-    <testcase time="0.00200000000000022" classname="sculpting" name="Rough_class_is_defined_properly"/>
-    <testcase time="0.00299999999999967" classname="sculpting" name="Rough_class_is_defined_properly"/>
     <testcase time="0.00300000000000011" classname="sculpting" name="Rough_class_is_defined_properly"/>
+    <testcase time="0.00299999999999967" classname="sculpting" name="Rough_class_is_defined_properly"/>
+    <testcase time="0.012" classname="sculpting" name="Rough_class_is_defined_properly"/>
     <testcase time="0.00300000000000011" classname="sculpting" name="Rough_class_is_defined_properly"/>
     <testcase time="0.00300000000000011" classname="sculpting" name="Rough_class_is_defined_properly"/>
     <testcase time="0.00199999999999978" classname="sculpting" name="Rough_class_is_defined_properly"/>
     <testcase time="0.00300000000000011" classname="sculpting" name="Rough_class_is_defined_properly"/>
     <testcase time="0.00300000000000011" classname="sculpting" name="Rough_class_is_defined_properly"/>
-    <testcase time="0.0879999999999996" classname="sculpting" name="Detailed_class_is_defined_properly"/>
+    <testcase time="0.00300000000000011" classname="sculpting" name="Rough_class_is_defined_properly"/>
+    <testcase time="0.00299999999999967" classname="sculpting" name="Rough_class_is_defined_properly"/>
+    <testcase time="0.00300000000000011" classname="sculpting" name="Rough_class_is_defined_properly"/>
+    <testcase time="0.00200000000000022" classname="sculpting" name="Rough_class_is_defined_properly"/>
+    <testcase time="0.00299999999999967" classname="sculpting" name="Rough_class_is_defined_properly"/>
+    <testcase time="0.00300000000000011" classname="sculpting" name="Rough_class_is_defined_properly"/>
+    <testcase time="0.004" classname="sculpting" name="Rough_class_is_defined_properly"/>
+    <testcase time="0.00200000000000022" classname="sculpting" name="Rough_class_is_defined_properly"/>
+    <testcase time="0.00299999999999967" classname="sculpting" name="Rough_class_is_defined_properly"/>
+    <testcase time="0.00300000000000011" classname="sculpting" name="Rough_class_is_defined_properly"/>
+    <testcase time="0.00199999999999978" classname="sculpting" name="Rough_class_is_defined_properly"/>
+    <testcase time="0.004" classname="sculpting" name="Rough_class_is_defined_properly"/>
+    <testcase time="0.00200000000000022" classname="sculpting" name="Rough_class_is_defined_properly"/>
+    <testcase time="0.004" classname="sculpting" name="Rough_class_is_defined_properly"/>
+    <testcase time="0.00199999999999978" classname="sculpting" name="Rough_class_is_defined_properly"/>
+    <testcase time="0.00300000000000011" classname="sculpting" name="Rough_class_is_defined_properly"/>
+    <testcase time="0.00300000000000011" classname="sculpting" name="Rough_class_is_defined_properly"/>
+    <testcase time="0.00300000000000011" classname="sculpting" name="Rough_class_is_defined_properly"/>
+    <testcase time="0.0979999999999999" classname="sculpting" name="Detailed_class_is_defined_properly"/>
+    <testcase time="0.00199999999999978" classname="sculpting" name="Detailed_class_is_defined_properly"/>
+    <testcase time="0.00300000000000011" classname="sculpting" name="Detailed_class_is_defined_properly"/>
+    <testcase time="0.00300000000000011" classname="sculpting" name="Detailed_class_is_defined_properly"/>
+    <testcase time="0.004" classname="sculpting" name="Detailed_class_is_defined_properly"/>
+    <testcase time="0.00800000000000001" classname="sculpting" name="Detailed_class_is_defined_properly"/>
+    <testcase time="0.00300000000000011" classname="sculpting" name="Detailed_class_is_defined_properly"/>
+    <testcase time="0.00299999999999967" classname="sculpting" name="Detailed_class_is_defined_properly"/>
+    <testcase time="0.00300000000000011" classname="sculpting" name="Detailed_class_is_defined_properly"/>
+    <testcase time="0.004" classname="sculpting" name="Detailed_class_is_defined_properly"/>
+    <testcase time="0.00300000000000011" classname="sculpting" name="Detailed_class_is_defined_properly"/>
+    <testcase time="0.00199999999999978" classname="sculpting" name="Detailed_class_is_defined_properly"/>
+    <testcase time="0.004" classname="sculpting" name="Detailed_class_is_defined_properly"/>
+    <testcase time="0.00300000000000011" classname="sculpting" name="Detailed_class_is_defined_properly"/>
+    <testcase time="0.0100000000000002" classname="sculpting" name="Detailed_class_is_defined_properly"/>
+    <testcase time="0.00299999999999967" classname="sculpting" name="Detailed_class_is_defined_properly"/>
+    <testcase time="0.00300000000000011" classname="sculpting" name="Detailed_class_is_defined_properly"/>
+    <testcase time="0.00300000000000011" classname="sculpting" name="Detailed_class_is_defined_properly"/>
+    <testcase time="0.00300000000000011" classname="sculpting" name="Detailed_class_is_defined_properly"/>
+    <testcase time="0.004" classname="sculpting" name="Detailed_class_is_defined_properly"/>
+    <testcase time="0.00199999999999978" classname="sculpting" name="Detailed_class_is_defined_properly"/>
+    <testcase time="0.00300000000000011" classname="sculpting" name="Detailed_class_is_defined_properly"/>
+    <testcase time="0.004" classname="sculpting" name="Detailed_class_is_defined_properly"/>
+    <testcase time="0.00300000000000011" classname="sculpting" name="Detailed_class_is_defined_properly"/>
+    <testcase time="0.004" classname="sculpting" name="Detailed_class_is_defined_properly"/>
+    <testcase time="0.00299999999999967" classname="sculpting" name="Detailed_class_is_defined_properly"/>
     <testcase time="0.00200000000000022" classname="sculpting" name="Detailed_class_is_defined_properly"/>
-    <testcase time="0.00300000000000011" classname="sculpting" name="Detailed_class_is_defined_properly"/>
-    <testcase time="0.00299999999999967" classname="sculpting" name="Detailed_class_is_defined_properly"/>
-    <testcase time="0.00300000000000011" classname="sculpting" name="Detailed_class_is_defined_properly"/>
-    <testcase time="0.00700000000000012" classname="sculpting" name="Detailed_class_is_defined_properly"/>
-    <testcase time="0.00300000000000011" classname="sculpting" name="Detailed_class_is_defined_properly"/>
-    <testcase time="0.00299999999999967" classname="sculpting" name="Detailed_class_is_defined_properly"/>
-    <testcase time="0.00300000000000011" classname="sculpting" name="Detailed_class_is_defined_properly"/>
-    <testcase time="0.00300000000000011" classname="sculpting" name="Detailed_class_is_defined_properly"/>
-    <testcase time="0.00300000000000011" classname="sculpting" name="Detailed_class_is_defined_properly"/>
-    <testcase time="0.00199999999999978" classname="sculpting" name="Detailed_class_is_defined_properly"/>
     <testcase time="0.004" classname="sculpting" name="Detailed_class_is_defined_properly"/>
     <testcase time="0.00300000000000011" classname="sculpting" name="Detailed_class_is_defined_properly"/>
-    <testcase time="0.0089999999999999" classname="sculpting" name="Detailed_class_is_defined_properly"/>
-    <testcase time="0.00300000000000011" classname="sculpting" name="Detailed_class_is_defined_properly"/>
-    <testcase time="0.00300000000000011" classname="sculpting" name="Detailed_class_is_defined_properly"/>
     <testcase time="0.00299999999999967" classname="sculpting" name="Detailed_class_is_defined_properly"/>
     <testcase time="0.00300000000000011" classname="sculpting" name="Detailed_class_is_defined_properly"/>
-    <testcase time="0.00300000000000011" classname="sculpting" name="Detailed_class_is_defined_properly"/>
-    <testcase time="0.00300000000000011" classname="sculpting" name="Detailed_class_is_defined_properly"/>
-    <testcase time="0.00199999999999978" classname="sculpting" name="Detailed_class_is_defined_properly"/>
-    <testcase time="0.004" classname="sculpting" name="Detailed_class_is_defined_properly"/>
-    <testcase time="0.00300000000000011" classname="sculpting" name="Detailed_class_is_defined_properly"/>
-    <testcase time="0.00300000000000011" classname="sculpting" name="Detailed_class_is_defined_properly"/>
-    <testcase time="0.00299999999999967" classname="sculpting" name="Detailed_class_is_defined_properly"/>
-    <testcase time="0.00300000000000011" classname="sculpting" name="Detailed_class_is_defined_properly"/>
-    <testcase time="0.00499999999999989" classname="sculpting" name="Detailed_class_is_defined_properly"/>
-    <testcase time="0.00300000000000011" classname="sculpting" name="Detailed_class_is_defined_properly"/>
-    <testcase time="0.00300000000000011" classname="sculpting" name="Detailed_class_is_defined_properly"/>
-    <testcase time="0.00299999999999967" classname="sculpting" name="Detailed_class_is_defined_properly"/>
     <testcase time="0.00300000000000011" classname="sculpting" name="Detailed_class_is_defined_properly"/>
     <testcase time="0.00300000000000011" classname="sculpting" name="Detailed_class_is_defined_properly"/>
     <testcase time="0.004" classname="sculpting" name="Detailed_class_is_defined_properly"/>
