@@ -98,7 +98,7 @@ g_imp_ice <- function(vars, vars_mean) {
 }
 
 g_cumulR2 <- function(dat_R2_cumul, textsize) {
-  ggplot(
+  g <- ggplot(
     dat_R2_cumul,
     aes(y = factor(.data$feature, levels = rev(levels(.data$feature))), x = round(.data$R2, 4))
   ) +
@@ -118,4 +118,5 @@ g_cumulR2 <- function(dat_R2_cumul, textsize) {
     ) +
     theme_bw() +
     theme(axis.ticks.y = element_blank(), axis.text.y = element_blank())
+  return(g)
 }

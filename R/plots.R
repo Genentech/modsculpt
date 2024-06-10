@@ -278,7 +278,7 @@ resolve_missings_specification <- function(dat_c, ms, missings) {
 #' @param pdp_plot_sample (`logical`) Sample PDP for faster ploting? Defaults to `TRUE`.
 #' @param show_pdp_plot (`logical`) Show plot with PDP ranges? Defaults to `TRUE`.
 #' @param var_imp_type (`character`) One of `c("normalized", "absolute", "ice")`.
-#' Defaults to "normalized". "ice" is only valid for a rough sculpture,
+#' Defaults to "normalized". "ice" is only valid for a rough sculpture.
 #' @param logodds_to_prob (`logical`) Only valid for binary response and sculptures built on
 #' the log-odds scale. Defaults to `FALSE` (i.e. no effect).
 #' If `TRUE`, then the y-values are transformed through inverse logit function 1 / (1 + exp(-x)).
