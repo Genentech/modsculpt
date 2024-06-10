@@ -352,7 +352,8 @@ g_var_imp <- function(object, feat_labels = NULL, textsize = 16, top_k = NULL,
   )
 
   # https://cran.r-project.org/web/packages/data.table/vignettes/datatable-importing.html#globals
-  feature <- . <- pdp_c <- NULL # due to NSE notes in R CMD check
+  feature <- . <- pdp_c <- ice_centered <- line_id <- var_y <-
+    NULL # due to NSE notes in R CMD check
 
   if (logodds_to_prob) {
     # evaluate the sculpture

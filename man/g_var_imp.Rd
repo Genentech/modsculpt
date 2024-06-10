@@ -11,7 +11,7 @@ g_var_imp(
   top_k = NULL,
   pdp_plot_sample = TRUE,
   show_pdp_plot = TRUE,
-  normalized_var = TRUE,
+  var_imp_type = "normalized",
   logodds_to_prob = FALSE,
   plot_ratios = if (show_pdp_plot) c(3, 2, 2) else c(3, 2)
 )
@@ -29,7 +29,8 @@ g_var_imp(
 
 \item{show_pdp_plot}{(\code{logical}) Show plot with PDP ranges? Defaults to \code{TRUE}.}
 
-\item{normalized_var}{(\code{logical}) Show normalized variance? Defaults to \code{TRUE}.}
+\item{var_imp_type}{(\code{character}) One of \code{c("normalized", "absolute", "ice")}.
+Defaults to "normalized". "ice" is only valid for a rough sculpture,}
 
 \item{logodds_to_prob}{(\code{logical}) Only valid for binary response and sculptures built on
 the log-odds scale. Defaults to \code{FALSE} (i.e. no effect).
