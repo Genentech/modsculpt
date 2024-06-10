@@ -278,6 +278,7 @@ resolve_missings_specification <- function(dat_c, ms, missings) {
 #' @param pdp_plot_sample (`logical`) Sample PDP for faster ploting? Defaults to `TRUE`.
 #' @param show_pdp_plot (`logical`) Show plot with PDP ranges? Defaults to `TRUE`.
 #' @param var_imp_type (`character`) One of `c("normalized", "absolute", "ice")`.
+#' Defaults to "normalized". "ice" is only valid for a rough sculpture,
 #' @param logodds_to_prob (`logical`) Only valid for binary response and sculptures built on
 #' the log-odds scale. Defaults to `FALSE` (i.e. no effect).
 #' If `TRUE`, then the y-values are transformed through inverse logit function 1 / (1 + exp(-x)).
@@ -416,6 +417,7 @@ g_var_imp <- function(object, feat_labels = NULL, textsize = 16, top_k = NULL,
       ))
     }
     # draw PDP plot
+    dt$feature <- factor(dt$feature, levels = feat_order)
     g1 <- g_pdp(dt = dt, pdp_plot_sample = pdp_plot_sample, feat_labels = feat_labels)
   } else {
     g1 <- NULL
@@ -427,6 +429,9 @@ g_var_imp <- function(object, feat_labels = NULL, textsize = 16, top_k = NULL,
   } else if (var_imp_type == "absolute") {
     g2 <- g_imp_abs(dat_var = dat_var, show_pdp_plot = show_pdp_plot, textsize = textsize)
   } else if (var_imp_type == "ice") {
+    if (!inherits(object, "rough")) {
+      stop('`var_imp_type == "ice"` is only valid for a rough sculpture.')
+    }
     # get ice curves
     dat_var_ice <- rbindlist(
       lapply(
