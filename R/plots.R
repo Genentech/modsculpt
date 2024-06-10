@@ -277,7 +277,7 @@ resolve_missings_specification <- function(dat_c, ms, missings) {
 #' @param top_k (`NULL`) or number to show only the most `k` important variables.
 #' @param pdp_plot_sample (`logical`) Sample PDP for faster ploting? Defaults to `TRUE`.
 #' @param show_pdp_plot (`logical`) Show plot with PDP ranges? Defaults to `TRUE`.
-#' @param normalized_var (`logical`) Show normalized variance? Defaults to `TRUE`.
+#' @param var_imp_type (`character`) One of `c("normalized", "absolute", "ice")`.
 #' @param logodds_to_prob (`logical`) Only valid for binary response and sculptures built on
 #' the log-odds scale. Defaults to `FALSE` (i.e. no effect).
 #' If `TRUE`, then the y-values are transformed through inverse logit function 1 / (1 + exp(-x)).
@@ -324,13 +324,14 @@ resolve_missings_specification <- function(dat_c, ms, missings) {
 g_var_imp <- function(object, feat_labels = NULL, textsize = 16, top_k = NULL,
                       pdp_plot_sample = TRUE,
                       show_pdp_plot = TRUE,
-                      normalized_var = TRUE,
+                      var_imp_type = "normalized",
                       logodds_to_prob = FALSE,
                       plot_ratios = `if`(show_pdp_plot, c(3, 2, 2), c(3, 2))) {
   checkmate::assert_class(object, "sculpture")
   checkmate::assert_integerish(textsize, len = 1, any.missing = FALSE)
   checkmate::assert_flag(pdp_plot_sample)
   checkmate::assert_flag(show_pdp_plot)
+  checkmate::assert_choice(var_imp_type, choices = c("normalized", "absolute", "ice"))
   checkmate::assert_flag(logodds_to_prob)
 
   if (show_pdp_plot) {
@@ -360,7 +361,7 @@ g_var_imp <- function(object, feat_labels = NULL, textsize = 16, top_k = NULL,
     )
     dt <- es$pdp
 
-    # convert to probability scale and center back to 0
+    # convert log-odds scale to probability scale and center back to 0
     dt[, pdp_c := inv.logit(pdp_c) - 0.5]
 
     # get importance
@@ -381,8 +382,16 @@ g_var_imp <- function(object, feat_labels = NULL, textsize = 16, top_k = NULL,
 
     # get cumul. R2
     dat_R2_cumul <- attr(object, "cumul_R2")
-  }
 
+    # get PDPs and predictions
+    if (show_pdp_plot) {
+      eg <- eval_sculpture(
+        sculpture = object,
+        data = as.data.frame(as.data.table(lapply(object, "[[", "x")))
+      )
+      dt <- eg$pdp
+    }
+  }
 
   # subset top_k if requested
   if (!is.null(top_k)) {
@@ -396,17 +405,8 @@ g_var_imp <- function(object, feat_labels = NULL, textsize = 16, top_k = NULL,
     }
   }
 
+  # g1 - PDP values
   if (show_pdp_plot) {
-    # if logodds_to_prob, then use dt from above
-    if (!logodds_to_prob) {
-      # get PDPs and predictions
-      eg <- eval_sculpture(
-        sculpture = object,
-        data = as.data.frame(as.data.table(lapply(object, "[[", "x")))
-      )
-      dt <- eg$pdp
-    }
-
     # check centering
     check_dt <- dt[, .(mean_pdp_c = mean(pdp_c)), .(feature)]
     if (abs(mean(check_dt$mean_pdp_c)) > 1e-1) {
@@ -415,80 +415,40 @@ g_var_imp <- function(object, feat_labels = NULL, textsize = 16, top_k = NULL,
         abs(mean(check_dt$mean_pdp_c))
       ))
     }
-  }
-
-  # g1 - PDP values
-  if (show_pdp_plot) {
-    # pdp_plot_sample ensures faster rendering
-    if (pdp_plot_sample && nrow(dt) > 4e4) {
-      set.seed(101)
-      g1 <- ggplot(
-        data = dt[sample(nrow(dt), 4e4), ],
-        mapping = aes(y = factor(.data$feature, levels = rev(feat_order)), x = .data$pdp_c)
-      ) +
-        geom_jitter(shape = 16, size = 1.5, alpha = 0.7, position = position_jitter(seed = 1))
-    } else {
-      g1 <- ggplot(
-        data = dt,
-        mapping = aes(y = factor(.data$feature, levels = rev(feat_order)), x = .data$pdp_c)
-      ) +
-        geom_jitter(shape = 16, size = 1.5, alpha = 0.2, position = position_jitter(seed = 1))
-    }
-    g1 <- g1 +
-      scale_y_discrete(labels = function(x) feat_labels[x]) +
-      labs(x = "Feature Score", y = "Feature") +
-      theme_bw()
+    # draw PDP plot
+    g1 <- g_pdp(dt = dt, pdp_plot_sample = pdp_plot_sample, feat_labels = feat_labels)
   } else {
     g1 <- NULL
   }
 
-  # g2 - varimp per feature
-  if (normalized_var) {
-    g2 <- ggplot(
-      dat_var,
-      aes(y = factor(.data$feature, levels = rev(levels(.data$feature))), x = .data$ratio)
-    ) +
-      geom_point() +
-      geom_text(
-        aes(
-          x = ifelse(.data$ratio > 0.75, .data$ratio - 0.4, .data$ratio),
-          label = sprintf("%.1f%%", round(.data$ratio * 100, 1))
-        ),
-        nudge_x = 0.2,
-        size = round(textsize / 3)
-      ) +
-      xlim(c(0, 1)) +
-      labs(
-        x = "Direct Variable Importance",
-        y = ifelse(show_pdp_plot, "", "Feature")
-      ) +
-      theme_bw()
-  } else {
-    nudge_x <- max(dat_var$variance) / 5
-    dat_var$variance_vs_top <- dat_var$variance / max(dat_var$variance)
-    g2 <- ggplot(
-      dat_var,
-      aes(y = factor(.data$feature, levels = rev(levels(feature))), x = .data$variance)
-    ) +
-      geom_point() +
-      geom_text(
-        aes(
-          x = ifelse(
-            .data$variance_vs_top > 0.5,
-            .data$variance - 2 * nudge_x,
-            .data$variance
-          ),
-          label = format(round(.data$variance, 3), nsmall = 3, digits = 3)
-        ),
-        nudge_x = nudge_x,
-        size = round(textsize / 3)
-      ) +
-      labs(
-        x = "Direct Variable Importance",
-        y = ifelse(show_pdp_plot, "", "Feature")
-      ) +
-      theme_bw()
-    dat_var$variance_vs_top <- NULL
+  # g2 - variable importance
+  if (var_imp_type == "normalized") {
+    g2 <- g_imp_norm(dat_var = dat_var, show_pdp_plot = show_pdp_plot, textsize = textsize)
+  } else if (var_imp_type == "absolute") {
+    g2 <- g_imp_abs(dat_var = dat_var, show_pdp_plot = show_pdp_plot, textsize = textsize)
+  } else if (var_imp_type == "ice") {
+    # get ice curves
+    dat_var_ice <- rbindlist(
+      lapply(
+        object,
+        function(v) {
+          generate_ice_data(
+            predictions = v[["ice_centered"]],
+            x = v$x,
+            logodds_to_prob = logodds_to_prob
+          )[, .(ice_centered, line_id)]
+        }
+      ),
+      idcol = "feature"
+    )
+    # convert to factor
+    dat_var_ice$feature <- factor(dat_var_ice$feature, levels = feat_order)
+    # calculate variance
+    dat_var_ice <- dat_var_ice[, .(var_y = var(ice_centered)), by = .(feature, line_id)]
+    # calculate mean of variances
+    vars_mean <- dat_var_ice[, .(mean_var_y = mean(var_y)), by = .(feature)]
+    # plot ice variances
+    g2 <- g_imp_ice(vars = dat_var_ice, vars_mean = vars_mean)
   }
 
   if (show_pdp_plot) {
@@ -498,26 +458,7 @@ g_var_imp <- function(object, feat_labels = NULL, textsize = 16, top_k = NULL,
   }
 
   # g3 - cumulative R2
-  g3 <- ggplot(
-    dat_R2_cumul,
-    aes(y = factor(.data$feature, levels = rev(levels(feature))), x = round(.data$R2, 4))
-  ) +
-    geom_point() +
-    geom_text(
-      aes(
-        x = ifelse(.data$R2 < 0.25, .data$R2 + 0.4, .data$R2),
-        label = sprintf("%.1f%%", round(.data$R2 * 100, 1))
-      ),
-      nudge_x = -0.2,
-      size = round(textsize / 3)
-    ) +
-    xlim(c(0, 1)) +
-    labs(
-      x = expression("Cumulative Approximation " * R^2),
-      y = ""
-    ) +
-    theme_bw() +
-    theme(axis.ticks.y = element_blank(), axis.text.y = element_blank())
+  g3 <- g_cumulR2(dat_R2_cumul = dat_R2_cumul, textsize = textsize)
 
   # combined graph
   if (show_pdp_plot) {
