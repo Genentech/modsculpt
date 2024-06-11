@@ -115,7 +115,7 @@ generate_ice_data <- function(predictions, x, logodds_to_prob = FALSE) {
       function(p) {
         data.frame(
           x = x,
-          ice_centered = `if`(logodds_to_prob, inv.logit(p), p),
+          y = `if`(logodds_to_prob, inv.logit(p), p),
           row.names = NULL
         )
       }
@@ -148,9 +148,12 @@ calculate_pdp_data <- function(id) {
 
 # generate PDP data from stored ICE predictions
 generate_pdp_data <- function(predictions, x, logodds_to_prob = FALSE) {
-  calculate_pdp_data(
-    generate_ice_data(predictions = predictions, x = x, logodds_to_prob)
-  )
+  id <- generate_ice_data(predictions = predictions, x = x, logodds_to_prob = logodds_to_prob)
+  setnames(id, old = "y", new = "ice_centered")
+  pd <- calculate_pdp_data(id)
+  setnames(pd, old = "pdp_centered", new = "y")
+  setnames(pd, old = "pdp_centered_se", new = "y_se")
+  return(pd)
 }
 
 

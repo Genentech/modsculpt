@@ -1,9 +1,3 @@
-# test_that("run_single_parallel works as expected", {
-#   actual <- modsculpt:::run_single_parallel(F)(1:5, function(x) x**2)
-#   expected <- lapply(1:5, function(x) x**2)
-#   expect_identical(actual, expected)
-# })
-
 
 test_that("sample_marginals works as expected", {
   actual <- sample_marginals(mtcars, n = 5, seed = 1)
@@ -64,6 +58,7 @@ test_that("calculate_ice_data and generate_ice_data works as expected", {
 
   predictions <- split(ice_data$ice_centered, ice_data$line_id)
   ice_data_gen <- generate_ice_data(predictions = predictions, x = df$mpg)
+  setnames(ice_data_gen, old = "y", new = "ice_centered")
   expect_equal(ice_data[, c("x", "ice_centered", "line_id")], ice_data_gen)
 
   # for cyl - discrete
@@ -84,6 +79,7 @@ test_that("calculate_ice_data and generate_ice_data works as expected", {
 
   predictions <- split(ice_data$ice_centered, ice_data$line_id)
   ice_data_gen <- generate_ice_data(predictions = predictions, x = df$cyl)
+  setnames(ice_data_gen, old = "y", new = "ice_centered")
   expect_equal(ice_data[, c("x", "ice_centered", "line_id")], ice_data_gen)
 })
 
@@ -116,6 +112,7 @@ test_that("calculate_pdp_data and generate_pdp_data works as expected", {
     predictions = split(ice_data$ice_centered, ice_data$line_id),
     x = df$mpg,
   )
+  setnames(pdp_data_gen, old = c("y", "y_se"), new = c("pdp_centered", "pdp_centered_se"))
   expect_equal(pdp_data, pdp_data_gen)
 
   # for cyl - discrete
@@ -139,6 +136,7 @@ test_that("calculate_pdp_data and generate_pdp_data works as expected", {
     predictions = split(ice_data$ice_centered, ice_data$line_id),
     x = df$cyl,
   )
+  setnames(pdp_data_gen, old = c("y", "y_se"), new = c("pdp_centered", "pdp_centered_se"))
   expect_equal(pdp_data, pdp_data_gen)
 })
 
@@ -168,11 +166,13 @@ test_that("generate_ice_data and generate_pdp_data with logodds_to_prob works as
   # generated ice
   predictions <- split(ice_data$ice_centered, ice_data$line_id)
   ice_data_gen <- generate_ice_data(predictions = predictions, x = df$mpg, logodds_to_prob = TRUE)
+  setnames(ice_data_gen, old = "y", new = "ice_centered")
   ice_data$ice_centered <- inv.logit(ice_data$ice_centered)
   expect_equal(ice_data[, c("x", "ice_centered", "line_id")], ice_data_gen)
 
   # generated pdp
   pdp_data_gen <- generate_pdp_data(predictions = predictions, x = df$mpg, logodds_to_prob = TRUE)
+  setnames(pdp_data_gen, old = c("y", "y_se"), new = c("pdp_centered", "pdp_centered_se"))
   pdp_data$pdp_centered <- inv.logit(pdp_data$pdp_centered)
   expect_equal(pdp_data, pdp_data_gen)
 })

@@ -439,10 +439,10 @@ g_var_imp <- function(object, feat_labels = NULL, textsize = 16, top_k = NULL,
         object,
         function(v) {
           generate_ice_data(
-            predictions = v[["ice_centered"]],
+            predictions = v[["ice"]],
             x = v$x,
             logodds_to_prob = logodds_to_prob
-          )[, .(ice_centered, line_id)]
+          )[, .(y, line_id)]
         }
       ),
       idcol = "feature"
@@ -450,7 +450,7 @@ g_var_imp <- function(object, feat_labels = NULL, textsize = 16, top_k = NULL,
     # convert to factor
     dat_var_ice$feature <- factor(dat_var_ice$feature, levels = feat_order)
     # calculate variance
-    dat_var_ice <- dat_var_ice[, .(var_y = var(ice_centered)), by = .(feature, line_id)]
+    dat_var_ice <- dat_var_ice[, .(var_y = var(y)), by = .(feature, line_id)]
     # calculate mean of variances
     vars_mean <- dat_var_ice[, .(mean_var_y = mean(var_y)), by = .(feature)]
     # plot ice variances
@@ -730,7 +730,6 @@ g_ice <- function(object, centered = TRUE, show_PDP = TRUE, coloured = FALSE,
       idcol = "feature"
     )
     ice_continuous <- unique(ice_continuous)
-    setnames(ice_continuous, old = "ice_centered", new = "y")
     ice_continuous[, `:=`(type = "ICE Profiles", line_id = as.character(line_id))]
 
     # PDP
@@ -748,7 +747,6 @@ g_ice <- function(object, centered = TRUE, show_PDP = TRUE, coloured = FALSE,
         ),
         idcol = "feature"
       )
-      setnames(pdp_continuous, old = c("pdp_centered", "pdp_centered_se"), new = c("y", "y_se"))
       pdp_continuous[, y_se := ifelse(is.na(y_se), 0, y_se)]
       pdp_continuous[, `:=`(line_id = "pdp", type = "Rough model (with SE)")]
 
@@ -777,7 +775,6 @@ g_ice <- function(object, centered = TRUE, show_PDP = TRUE, coloured = FALSE,
       idcol = "feature"
     )
     ice_discrete <- unique(ice_discrete)
-    setnames(ice_discrete, old = "ice_centered", new = "y")
     ice_discrete[, `:=`(type = "ICE Profiles", line_id = as.character(line_id))]
 
     # PDP
@@ -795,7 +792,6 @@ g_ice <- function(object, centered = TRUE, show_PDP = TRUE, coloured = FALSE,
         ),
         idcol = "feature"
       )
-      setnames(pdp_discrete, old = c("pdp_centered", "pdp_centered_se"), new = c("y", "y_se"))
       pdp_discrete[, `:=`(line_id = "pdp", type = "Rough model (with SE)")]
 
       dat_d <- rbind(ice_discrete, pdp_discrete, fill = TRUE)
