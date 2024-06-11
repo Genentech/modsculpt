@@ -6,6 +6,8 @@
 \alias{modsculpt-package}
 \title{modsculpt: Direct and Indirect Additive Modeling with Model Sculpting}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 Additive modeling algorithms are crucial for working with tabular data in machine learning. Such models offer intrinsic interpretability and frequently have optimal or near-optimal performance. In many cases linear additive models (fit via classical statistical models or using regularized methods, depending on the number of features) have optimal performance. However, in general it may be necessary to use non-linear functions of the features and use constraints on those functions to ensure trustworthiness. The Model Sculpting method has been developed to construct such additive models; it involves creating a strong learner (often a black box model with optimal performance), extracting an additive approximation of it, pruning negligible features, and refining the model for smoothness and feature relevance. The package modsculpt provides the necessary code to implement this Model Sculpting pipeline.
 }
 \seealso{
