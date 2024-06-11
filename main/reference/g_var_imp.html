@@ -67,7 +67,7 @@
 <span>  top_k <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  pdp_plot_sample <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  show_pdp_plot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  normalized_var <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  var_imp_type <span class="op">=</span> <span class="st">"normalized"</span>,</span>
 <span>  logodds_to_prob <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  plot_ratios <span class="op">=</span> <span class="kw">if</span> <span class="op">(</span><span class="va">show_pdp_plot</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span> <span class="kw">else</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -99,8 +99,9 @@
 <dd><p>(<code>logical</code>) Show plot with PDP ranges? Defaults to <code>TRUE</code>.</p></dd>
 
 
-<dt>normalized_var</dt>
-<dd><p>(<code>logical</code>) Show normalized variance? Defaults to <code>TRUE</code>.</p></dd>
+<dt>var_imp_type</dt>
+<dd><p>(<code>character</code>) One of <code>c("normalized", "absolute", "ice")</code>.
+Defaults to "normalized". "ice" is only valid for a rough sculpture.</p></dd>
 
 
 <dt>logodds_to_prob</dt>
