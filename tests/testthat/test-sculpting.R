@@ -537,3 +537,27 @@ test_that("Detailed class is defined properly", {
 
   test_detailed(ds, covariates)
 })
+
+
+test_that("variable importance plots with ice", {
+  df <- mtcars
+  df$vs <- as.factor(df$vs)
+  model <- glm(vs ~ hp + mpg, data = df, family = "binomial")
+  model_predict <- function(x) predict(model, newdata = x, type = "link")
+  covariates <- c("hp", "mpg")
+
+  pm <- sample_marginals(df[covariates], n = 50, seed = 26)
+
+  rs <- sculpt_rough(
+    dat = pm, model_predict_fun = model_predict,
+    n_ice = 10, seed = 1, verbose = 0
+  )
+
+  # vi <- g_var_imp(rs, feat_labels = labels)
+  # grid::grid.draw(vi)
+  vi_pm_prob <-
+    g_var_imp(rs, show_pdp_plot = FALSE, textsize = 16, var_imp_type = "ice",
+              logodds_to_prob = T)
+  plot(vi_pm_prob)
+})
+
