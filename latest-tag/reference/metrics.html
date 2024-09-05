@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">modsculpt</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,7 +70,7 @@
 <span></span>
 <span><span class="fu">metrics_R2</span><span class="op">(</span><span class="va">score_fun</span>, <span class="va">y</span>, <span class="va">y_hat</span>, na_rm <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">metrics_fit_calib</span><span class="op">(</span><span class="va">y</span>, <span class="va">y_hat</span><span class="op">)</span></span>
+<span><span class="fu">metrics_fit_calib</span><span class="op">(</span><span class="va">y</span>, <span class="va">y_hat</span>, rev_fct <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">metrics_DI</span><span class="op">(</span><span class="va">score_fun</span>, <span class="va">y</span>, <span class="va">y_hat_calib</span>, na_rm <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
@@ -96,6 +96,11 @@
 <dt>score_fun</dt>
 <dd><p>A scoring function: <code>score_quadratic</code>, <code>score_log_loss</code>,
 or a user-defined scoring rule. See below for more details.</p></dd>
+
+
+<dt>rev_fct</dt>
+<dd><p>Logical, defaults to <code>FALSE</code>. Switch the factor level of
+the data before performing calibration. Only relevant for binary response.</p></dd>
 
 
 <dt>y_hat_calib</dt>
