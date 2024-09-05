@@ -364,10 +364,15 @@ metrics_R2 <- function(score_fun, y, y_hat, na_rm = FALSE) {
 #' @describeIn metrics Fit calibration curve using [mgcv::gam()].
 #' Note that NAs are always dropped.
 #' @export
-metrics_fit_calib <- function(y, y_hat) {
+metrics_fit_calib <- function(y, y_hat, rev_fct = FALSE) {
   requireNamespace("mgcv")
   s <- mgcv::s
-  fam <- if (is.factor(y)) binomial() else gaussian()
+  if (is.factor(y)) {
+    fam <- binomial()
+    if(rev_fct) y <- factor(y, levels=rev(levels(y)))
+  } else {
+    fam <- gaussian()
+  }
   tryCatch(
     mgcv::gam(y ~ s(y_hat, k = -1), family = fam, na.action = "na.omit"),
     error = \(e) tryCatch(
