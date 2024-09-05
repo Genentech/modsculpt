@@ -184,6 +184,8 @@ calc_range_pdp <- function(dt) {
 #' @param y_hat Vector of predictions.
 #' @param y_hat_calib Vector of calibrated predictions. See below for more details.
 #' @param na_rm Logical, defaults to `FALSE`. Should NAs be removed?
+#' @param rev_fct Logical, defaults to `FALSE`. Switch the factor level of
+#' the data before performing calibration. Only relevant for binary response.
 #'
 #' @section Scoring function:
 #' One can use predefined scores like `score_quadratic` or `score_log_loss`.

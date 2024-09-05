@@ -41,6 +41,9 @@ metrics_r2(y, y_hat, y_hat_calib, na_rm = FALSE)
 \item{score_fun}{A scoring function: \code{score_quadratic}, \code{score_log_loss},
 or a user-defined scoring rule. See below for more details.}
 
+\item{rev_fct}{Logical, defaults to \code{FALSE}. Switch the factor level of
+the data before performing calibration. Only relevant for binary response.}
+
 \item{y_hat_calib}{Vector of calibrated predictions. See below for more details.}
 }
 \value{
