@@ -23,7 +23,7 @@ metrics_unc(score_fun, y, na_rm = FALSE)
 
 metrics_R2(score_fun, y, y_hat, na_rm = FALSE)
 
-metrics_fit_calib(y, y_hat)
+metrics_fit_calib(y, y_hat, rev_fct = FALSE)
 
 metrics_DI(score_fun, y, y_hat_calib, na_rm = FALSE)
 

@@ -29,7 +29,7 @@ g_var_imp(
 
 \item{show_pdp_plot}{(\code{logical}) Show plot with PDP ranges? Defaults to \code{TRUE}.}
 
-\item{var_imp_type}{(\code{character}) One of \code{c("normalized", "absolute", "ice")}.
+\item{var_imp_type}{(\code{character}) One of \code{c("normalized", "absolute", "ice", "ice_orig_mod")}.
 Defaults to "normalized". "ice" is only valid for a rough sculpture.}
 
 \item{logodds_to_prob}{(\code{logical}) Only valid for binary response and sculptures built on
