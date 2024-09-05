@@ -275,6 +275,9 @@ sculpt_rough <- function(dat, model_predict_fun, n_ice = 10,
     # generate product marginals
     if (data_as_marginals) {
       dat_subs <- dat[covariates[covariates != col]]
+      # Sample n_ice rows
+      dat_subs <- dat_subs[sample(nrow(dat_subs), n_ice, replace = TRUE), ]
+
     } else {
       if (length(covariates) > 1) {
         dat_subs <- sample_marginals(

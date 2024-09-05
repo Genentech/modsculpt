@@ -184,6 +184,8 @@ calc_range_pdp <- function(dt) {
 #' @param y_hat Vector of predictions.
 #' @param y_hat_calib Vector of calibrated predictions. See below for more details.
 #' @param na_rm Logical, defaults to `FALSE`. Should NAs be removed?
+#' @param rev_fct Logical, defaults to `FALSE`. Switch the factor level of
+#' the data before performing calibration. Only relevant for binary response.
 #'
 #' @section Scoring function:
 #' One can use predefined scores like `score_quadratic` or `score_log_loss`.
@@ -364,10 +366,15 @@ metrics_R2 <- function(score_fun, y, y_hat, na_rm = FALSE) {
 #' @describeIn metrics Fit calibration curve using [mgcv::gam()].
 #' Note that NAs are always dropped.
 #' @export
-metrics_fit_calib <- function(y, y_hat) {
+metrics_fit_calib <- function(y, y_hat, rev_fct = FALSE) {
   requireNamespace("mgcv")
   s <- mgcv::s
-  fam <- if (is.factor(y)) binomial() else gaussian()
+  if (is.factor(y)) {
+    fam <- binomial()
+    if(rev_fct) y <- factor(y, levels=rev(levels(y)))
+  } else {
+    fam <- gaussian()
+  }
   tryCatch(
     mgcv::gam(y ~ s(y_hat, k = -1), family = fam, na.action = "na.omit"),
     error = \(e) tryCatch(

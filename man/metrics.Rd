@@ -23,7 +23,7 @@ metrics_unc(score_fun, y, na_rm = FALSE)
 
 metrics_R2(score_fun, y, y_hat, na_rm = FALSE)
 
-metrics_fit_calib(y, y_hat)
+metrics_fit_calib(y, y_hat, rev_fct = FALSE)
 
 metrics_DI(score_fun, y, y_hat_calib, na_rm = FALSE)
 
@@ -40,6 +40,9 @@ metrics_r2(y, y_hat, y_hat_calib, na_rm = FALSE)
 
 \item{score_fun}{A scoring function: \code{score_quadratic}, \code{score_log_loss},
 or a user-defined scoring rule. See below for more details.}
+
+\item{rev_fct}{Logical, defaults to \code{FALSE}. Switch the factor level of
+the data before performing calibration. Only relevant for binary response.}
 
 \item{y_hat_calib}{Vector of calibrated predictions. See below for more details.}
 }

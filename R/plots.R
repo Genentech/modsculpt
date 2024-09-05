@@ -277,7 +277,7 @@ resolve_missings_specification <- function(dat_c, ms, missings) {
 #' @param top_k (`NULL`) or number to show only the most `k` important variables.
 #' @param pdp_plot_sample (`logical`) Sample PDP for faster ploting? Defaults to `TRUE`.
 #' @param show_pdp_plot (`logical`) Show plot with PDP ranges? Defaults to `TRUE`.
-#' @param var_imp_type (`character`) One of `c("normalized", "absolute", "ice")`.
+#' @param var_imp_type (`character`) One of `c("normalized", "absolute", "ice", "ice_orig_mod")`.
 #' Defaults to "normalized". "ice" is only valid for a rough sculpture.
 #' @param logodds_to_prob (`logical`) Only valid for binary response and sculptures built on
 #' the log-odds scale. Defaults to `FALSE` (i.e. no effect).
@@ -332,7 +332,7 @@ g_var_imp <- function(object, feat_labels = NULL, textsize = 16, top_k = NULL,
   checkmate::assert_integerish(textsize, len = 1, any.missing = FALSE)
   checkmate::assert_flag(pdp_plot_sample)
   checkmate::assert_flag(show_pdp_plot)
-  checkmate::assert_choice(var_imp_type, choices = c("normalized", "absolute", "ice"))
+  checkmate::assert_choice(var_imp_type, choices = c("normalized", "absolute", "ice", "ice_orig_mod"))
   checkmate::assert_flag(logodds_to_prob)
 
   if (show_pdp_plot) {
@@ -353,6 +353,7 @@ g_var_imp <- function(object, feat_labels = NULL, textsize = 16, top_k = NULL,
 
   # https://cran.r-project.org/web/packages/data.table/vignettes/datatable-importing.html#globals
   feature <- . <- pdp_c <- ice_centered <- line_id <- var_y <-
+    ice <- y <-
     NULL # due to NSE notes in R CMD check
 
   if (logodds_to_prob) {
@@ -429,7 +430,7 @@ g_var_imp <- function(object, feat_labels = NULL, textsize = 16, top_k = NULL,
     g2 <- g_imp_norm(dat_var = dat_var, show_pdp_plot = show_pdp_plot, textsize = textsize)
   } else if (var_imp_type == "absolute") {
     g2 <- g_imp_abs(dat_var = dat_var, show_pdp_plot = show_pdp_plot, textsize = textsize)
-  } else if (var_imp_type == "ice") {
+  } else if (var_imp_type == "ice_orig_mod") {
     if (!inherits(object, "rough")) {
       stop('`var_imp_type == "ice"` is only valid for a rough sculpture.')
     }
@@ -451,6 +452,40 @@ g_var_imp <- function(object, feat_labels = NULL, textsize = 16, top_k = NULL,
     dat_var_ice$feature <- factor(dat_var_ice$feature, levels = feat_order)
     # calculate variance
     dat_var_ice <- dat_var_ice[, .(var_y = var(y)), by = .(feature, line_id)]
+    # calculate mean of variances
+    vars_mean <- dat_var_ice[, .(mean_var_y = mean(var_y)), by = .(feature)]
+    # plot ice variances
+    g2 <- g_imp_ice(vars = dat_var_ice, vars_mean = vars_mean)
+  } else if (var_imp_type == "ice") {
+    model_predict_fun <- function(x) {
+      if(logodds_to_prob) {
+        p <- predict(object, newdata = x)
+        inv.logit(p)
+      } else {
+        predict(object, newdata = x)
+      }
+    }
+
+    dat_var_ice <- rbindlist(
+      lapply(
+        object,
+        function(v) {
+          calculate_ice_data(
+              sub = v$subsets,
+              predict_fun = model_predict_fun,
+              x = v$x,
+              x_name = v$x_name,
+              col_order = names(object)
+          )[, .(ice, line_id)]
+        }
+      ),
+      idcol = "feature"
+    )
+
+    # convert to factor
+    dat_var_ice$feature <- factor(dat_var_ice$feature, levels = feat_order)
+    # calculate variance
+    dat_var_ice <- dat_var_ice[, .(var_y = var(ice)), by = .(feature, line_id)]
     # calculate mean of variances
     vars_mean <- dat_var_ice[, .(mean_var_y = mean(var_y)), by = .(feature)]
     # plot ice variances
