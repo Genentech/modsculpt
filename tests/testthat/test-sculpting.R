@@ -564,3 +564,197 @@ test_that("variable importance plots with ice", {
   )
   expect_s3_class(vi_pm_prob, "gtable")
 })
+
+test_that("sculpt_rough handles verbose and data_as_marginals workflow", {
+  df <- head(mtcars, 6)
+  covariates <- c("mpg", "wt", "disp")
+  dat <- df[covariates]
+  model <- lm(hp ~ mpg + wt + disp, data = head(mtcars, 12))
+  predict_fun <- function(x) predict(model, newdata = x)
+
+  msgs <- capture.output(
+    rs <- sculpt_rough(
+      dat = dat,
+      model_predict_fun = predict_fun,
+      n_ice = 3,
+      seed = 2,
+      verbose = 1,
+      data_as_marginals = TRUE
+    ),
+    type = "message"
+  )
+  expect_true(any(grepl("Sculpting variable: 1 / 3", msgs, fixed = TRUE)))
+  expect_s3_class(rs, "rough")
+  expect_s3_class(rs, "sculpture")
+  expect_equal(nrow(rs$mpg$subsets), 3)
+  expect_equal(colnames(rs$mpg$subsets), c("wt", "disp"))
+})
+
+test_that("sculpt_rough verbose handles larger covariate sets", {
+  set.seed(17)
+  dat <- as.data.frame(matrix(rnorm(120), ncol = 12))
+  colnames(dat) <- paste0("x", seq_len(ncol(dat)))
+  predict_fun <- function(x) rowSums(as.matrix(x))
+
+  msgs <- capture.output(
+    sculpt_rough(
+      dat = dat,
+      model_predict_fun = predict_fun,
+      n_ice = 3,
+      seed = 5,
+      verbose = 1
+    ),
+    type = "message"
+  )
+  expect_true(any(grepl("Sculpting variable: 10 / 12", msgs, fixed = TRUE)))
+})
+
+test_that("sculpt_detailed_lm expands missings flag and reports progress", {
+  df <- mtcars
+  df$cyl <- as.factor(df$cyl)
+  covariates <- c("mpg", "wt", "cyl")
+  pm <- sample_marginals(df[covariates], n = 40, seed = 21)
+  model <- lm(hp ~ mpg + wt + cyl, data = df)
+  predict_fun <- function(x) predict(model, newdata = x)
+
+  rs <- sculpt_rough(
+    dat = pm,
+    model_predict_fun = predict_fun,
+    n_ice = 4,
+    seed = 11,
+    verbose = 0
+  )
+
+  msgs <- capture.output(
+    ds <- sculpt_detailed_lm(rs, missings = -1, verbose = 1),
+    type = "message"
+  )
+  expect_true(any(grepl("Sculpting variable: 1 / 3", msgs, fixed = TRUE)))
+  expect_identical(ds$mpg$missings_flag, -1)
+  expect_null(ds$cyl$missings_flag)
+
+  ds_named <- sculpt_detailed_lm(rs, missings = c(mpg = -1, wt = -2))
+  expect_identical(ds_named$mpg$missings_flag, -1)
+  expect_identical(ds_named$wt$missings_flag, -2)
+})
+
+test_that("smoother_gam handles discrete edge cases", {
+  skip_if_not_installed("mgcv")
+
+  set.seed(42)
+  x_const <- factor(rep("a", 5))
+  y <- rnorm(5)
+  sm_const <- smoother_gam(
+    x = x_const,
+    y = y,
+    is_discrete = TRUE,
+    column_name = "feat"
+  )
+  expect_s3_class(sm_const, "lm")
+
+  x_levels <- factor(rep(letters[1:2], each = 4))
+  y_levels <- rnorm(8)
+  sm_levels <- smoother_gam(
+    x = x_levels,
+    y = y_levels,
+    is_discrete = TRUE,
+    column_name = "feat"
+  )
+  preds <- smoother_gam_predict(
+    smoother = sm_levels,
+    new_x = factor(c("a", "b", "c"), levels = letters[1:3]),
+    is_discrete = TRUE,
+    column_name = "feat"
+  )
+  expect_equal(preds[3], 0)
+
+  expect_error(
+    smoother_gam(
+      x = factor(c("a", "b")),
+      y = c(NA_real_, NA_real_),
+      is_discrete = TRUE,
+      column_name = "feat"
+    ),
+    "Cannot fit a smoother"
+  )
+})
+
+test_that("smoother_lm fallbacks cover degenerate inputs", {
+  x_const <- rep(1, 5)
+  y <- seq_along(x_const)
+  sm_const <- smoother_lm(
+    x = x_const,
+    y = y,
+    is_discrete = FALSE,
+    column_name = "feat"
+  )
+  expect_s3_class(sm_const, "lm")
+
+  expect_error(
+    smoother_lm(
+      x = c(1, 2, NA_real_),
+      y = c(NA_real_, NA_real_, NA_real_),
+      is_discrete = FALSE,
+      column_name = "feat"
+    ),
+    "Cannot fit a smoother"
+  )
+})
+
+test_that("smoother_lm_predict handles new discrete levels", {
+  set.seed(7)
+  x <- factor(rep(letters[1:2], each = 3))
+  y <- rnorm(length(x))
+  sm <- smoother_lm(
+    x = x,
+    y = y,
+    is_discrete = TRUE,
+    column_name = "feat"
+  )
+
+  preds <- smoother_lm_predict(
+    smoother = sm,
+    new_x = factor(c("a", "c"), levels = letters[1:3]),
+    is_discrete = TRUE,
+    column_name = "feat"
+  )
+  expect_equal(preds[2], 0)
+
+  expect_error(
+    smoother_lm_predict(
+      smoother = sm,
+      new_x = factor(c("a", "c"), levels = letters[1:3]),
+      is_discrete = FALSE,
+      column_name = "feat"
+    ),
+    "Unknown value for prediction"
+  )
+})
+
+test_that("sculpt_polished supports selection by k and vars", {
+  rs <- fixture_sculpture()
+  ds <- sculpt_detailed_lm(rs)
+
+  ps_k <- sculpt_polished(ds, k = 1)
+  expect_equal(length(ps_k), 1)
+  expect_equal(names(ps_k), levels(attr(ds, "cumul_R2")$feature)[1])
+
+  ps_vars <- sculpt_polished(ds, vars = "wt")
+  expect_equal(names(ps_vars), "wt")
+  expect_equal(attr(ps_vars, "offset"), attr(ds, "offset"))
+})
+
+test_that("predict.sculpture supports explicit newdata and printing works", {
+  sc <- fixture_sculpture()
+  newdata <- fixture_newdata()
+
+  preds <- predict(sc, newdata = newdata)
+  expect_length(preds, nrow(newdata))
+  expect_named(preds)
+
+  tmp <- tempfile()
+  capture.output(print(sc), file = tmp)
+  printed <- readLines(tmp, warn = FALSE)
+  unlink(tmp)
+  expect_true(any(grepl("Rough sculpture with", printed, fixed = TRUE)))
+})

@@ -89,3 +89,40 @@ test_that("g_component returns expected panels", {
   expect_null(comp_disc$continuous)
   expect_s3_class(comp_disc$discrete, "ggplot")
 })
+
+test_that("regression workflow metrics remain stable", {
+  wf <- build_regression_workflow(seed = 99)
+  holdout_x <- wf$holdout[wf$features]
+
+  preds <- list(
+    rough = predict(wf$rough, holdout_x),
+    detailed = predict(wf$detailed, holdout_x),
+    polished = predict(wf$polished, holdout_x[names(wf$polished)])
+  )
+
+  metrics <- data.frame(
+    sculpture = names(preds),
+    R2 = round(vapply(
+      preds,
+      function(p) metrics_R2("score_quadratic", wf$holdout$hp, p),
+      numeric(1)
+    ), 6),
+    row.names = NULL
+  )
+
+  expect_snapshot_value(metrics, style = "json2")
+})
+
+test_that("classification workflow probabilities are reproducible", {
+  wf <- build_classification_workflow(seed = 303)
+  holdout_x <- wf$holdout[wf$features]
+
+  probs <- data.frame(
+    index = seq_len(6),
+    probability = round(suppressWarnings(
+      modsculpt:::inv.logit(predict(wf$rough, holdout_x))
+    )[seq_len(6)], 6)
+  )
+
+  expect_snapshot_value(probs, style = "json2")
+})
