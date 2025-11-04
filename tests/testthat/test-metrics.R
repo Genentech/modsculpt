@@ -1,6 +1,6 @@
 test_that("metrics_r2 works", {
   actual <- metrics_r2(y = c(1, 2, 3), y_hat = c(0.5, 1.5, 2.5), y_hat_calib = c(0.5, 1.5, 3.5))
-  expect_identical(actual, 2.25)
+  expect_equal(actual, 2.25, tolerance = sqrt(.Machine$double.eps))
 
   actual <- metrics_r2(
     y = c(1, 2, 3), y_hat = c(0.5, 1.5, NA), y_hat_calib = c(0.5, 1.5, NA),

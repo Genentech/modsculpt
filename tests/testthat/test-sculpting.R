@@ -555,9 +555,12 @@ test_that("variable importance plots with ice", {
 
   # vi <- g_var_imp(rs, feat_labels = labels)
   # grid::grid.draw(vi)
-  vi_pm_prob <-
-    g_var_imp(rs, show_pdp_plot = FALSE, textsize = 16, var_imp_type = "ice",
-              logodds_to_prob = T)
-  plot(vi_pm_prob)
+  vi_pm_prob <- g_var_imp(
+    rs,
+    show_pdp_plot = FALSE,
+    textsize = 16,
+    var_imp_type = "ice",
+    logodds_to_prob = TRUE
+  )
+  expect_s3_class(vi_pm_prob, "gtable")
 })
-
