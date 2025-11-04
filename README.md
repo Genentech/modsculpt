@@ -3,6 +3,7 @@
 <!-- start badges -->
 [![Check 🛠](https://github.com/genentech/modsculpt/actions/workflows/check.yaml/badge.svg)](https://genentech.github.io/modsculpt/unit-test-report/)
 [![Docs 📚](https://github.com/genentech/modsculpt/actions/workflows/docs.yaml/badge.svg)](https://genentech.github.io/modsculpt/)
+[![Coverage 📔](https://github.com/genentech/modsculpt/actions/workflows/coverage.yaml/badge.svg)](https://genentech.github.io/modsculpt/coverage-report/)
 <!-- end badges -->
 
 ![](man/figures/ms_flow.png)
@@ -94,5 +95,4 @@ comp <- g_comparison(
 comp$continuous
 ```
 ![](man/figures/comparison.png)
-
 
