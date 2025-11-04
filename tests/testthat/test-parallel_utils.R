@@ -1,5 +1,3 @@
-skip_on_cran()
-
 # These tests mock the foreach/doParallel/parallel bindings to ensure that the
 # user-facing helpers still manipulate parallel backends correctly without
 # spawning real clusters. This prevents accidental regressions in parallel
@@ -133,4 +131,19 @@ test_that("define_foreach_operand selects correct operator", {
     .package = "foreach"
   )
   expect_identical(define_foreach_operand(allow_par = TRUE)(), "sequential")
+})
+
+test_that("parallel_set validates inputs", {
+  expect_error(parallel_set(num_cores = 0), ">=")
+  expect_error(parallel_set(cluster_type = "invalid"), "arg")
+})
+
+test_that("parallel_set and parallel_end work with real backend", {
+  skip_on_cran()
+  on.exit(parallel_end(), add = TRUE)
+  expect_message(parallel_set(num_cores = 1, cluster_type = "psock"), "Using 1")
+  expect_true(foreach::getDoParRegistered())
+  expect_equal(foreach::getDoParWorkers(), 1)
+  parallel_end()
+  expect_identical(foreach::getDoParName(), "doSEQ")
 })
