@@ -1,6 +1,6 @@
 Package: modsculpt
 Title: Direct and Indirect Additive Modeling with Model Sculpting
-Version: 0.1.1.9000
+Version: 0.1.2
 Authors@R: c(
     person("Ondrej", "Slama", email = "ondrej.slama@roche.com", role = c("aut", "cre")),
     person("Kenta", "Yoshida", email = "yoshida.kenta@gene.com", role = "aut"),
