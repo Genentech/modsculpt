@@ -17,6 +17,9 @@ on:
       - develop
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   coverage:
     name: Coverage 📔
@@ -25,3 +28,50 @@ jobs:
       REPO_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     with:
       deps-installation-method: setup-r-dependencies
+      publish-coverage-report-gh-pages: false
+
+  publish-coverage-report:
+    name: Publish coverage report 📰
+    runs-on: ubuntu-latest
+    needs: coverage
+    if: github.event_name != 'pull_request'
+    concurrency:
+      group: ghpages
+    steps:
+      - name: Setup token 🔑
+        id: github-token
+        run: |
+          if [ "${{ secrets.REPO_GITHUB_TOKEN }}" == "" ]; then
+            echo "REPO_GITHUB_TOKEN is empty. Substituting it with GITHUB_TOKEN."
+            echo "token=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_OUTPUT
+          else
+            echo "Using REPO_GITHUB_TOKEN."
+            echo "token=${{ secrets.REPO_GITHUB_TOKEN }}" >> $GITHUB_OUTPUT
+          fi
+        shell: bash
+
+      - name: Download coverage report as artifact ⤵️
+        uses: actions/download-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage-report
+
+      - name: Fix artifact structure 🔧
+        run: |
+          # The artifact has nested modsculpt// paths, so we need to move files up
+          if [ -d "coverage-report/modsculpt" ]; then
+            # Move contents from modsculpt subdirectory to coverage-report root
+            mv coverage-report/modsculpt/* coverage-report/ 2>/dev/null || true
+            rmdir coverage-report/modsculpt 2>/dev/null || true
+          fi
+          # Also handle the case where files might be directly in coverage-report
+          if [ -f "coverage-report/coverage-report.html" ]; then
+            mv coverage-report/coverage-report.html coverage-report/index.html
+          fi
+
+      - name: Upload coverage report to GitHub pages 🗞️
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ steps.github-token.outputs.token }}
+          publish_dir: ./coverage-report
+          destination_dir: coverage-report
